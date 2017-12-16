@@ -1,81 +1,44 @@
-// Select color input
-// Select size input
-// function myFunction() {
-//     alert("The form was submitted");
-// }
-var colorPicked = $('#colorPicker').val();
+//initialize the variable and get the default color value
+let colorPicked = $('#colorPicker').val();
 
-var gridWidth;
-var gridHeight;
+//the grid width and height don't have to have an initial value because the grid
+// only shows up when the button is clicked.
+let gridWidth;
+let gridHeight;
 
+// When size is submitted by the user, call makeGrid()
 $('#sizePicker').submit(function(event){
 	gridWidth = $('#input_width').val();
 	gridHeight = $('#input_height').val();
-
 	makeGrid();
 	event.preventDefault();
 });
 
 $('#colorPicker').change(function(){
 	colorPicked = $(this).val();
-	// alert('color picked is' + colorPicked);
-
-})
-
-// var clicking = false;
-
-// When size is submitted by the user, call makeGrid()
+});
 
 function makeGrid() {
+	//clear the table first
 	$('#pixel_canvas').children().remove();
+
+	//draw the table based on the grid size
 	for(i = 0; i < gridHeight; i++) {
-		var row = $('<tr></tr>').appendTo('#pixel_canvas');
-		// console.log(row);
+		let row = $('<tr></tr>').appendTo('#pixel_canvas');
 		for(j = 0; j < gridWidth; j++) {
-			// row.append('<td>1</td>');
 			$('<td></td>').appendTo(row);
 		}
-
 	};
-
+	//change the cell color when the cell is clicked
 	$('td').click(function(e){
-		alert(e.which);
 		$(this).css('background-color', colorPicked);
-		clicking = true;
-	// alert('mouse entered!');
 	});
 
-	// $('td').mouseup(function(){
-	// 	// $(this).css('background-color', colorPicked);
-	// 	clicking = false;
-	// // alert('mouse entered!');
-	// });
-
+	//when the mouse is clicked and moved, change the cell color too
+	// so that continuous lines can be drawn.
 	$('td').mousemove(function(e){
-		// if(clicking == true) {
-		// 	$(this).css('background-color', colorPicked);
-		// }
-		// alert(e.which);
 		if(e.buttons == 1) {
 			$(this).css('background-color', colorPicked);
 		}
-
-	// alert('mouse entered!');
 	});
-
-	// console.log($('tr'));
-
-	// rows = $('tr');
-
-	// // rows = [1,2];
-
-	// rows.forEach(function(row){
-	// 	for(j = 0; j < gridWidth; j++) {
-	// 	row.append('<td>1</td>');
-
-	// 	}
-	// });
-
-
-
 }
